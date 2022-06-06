@@ -1,8 +1,8 @@
 import React from 'react';
 import axios from 'axios';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-const UsersForm = () => {
+const UsersForm = ({getUsers}) => {
 
 
     const [name, setName] = useState("");
@@ -15,15 +15,20 @@ const UsersForm = () => {
       const submit = (e) => {
         e.preventDefault();
        const user = {
-          nafirst_name: name,
+          first_name: name,
           last_name: lastName,
           email,
           birthday
           
-        }
+        };
 
         console.log(user)
-
+        
+            axios
+            .post("https://users-crud1.herokuapp.com/users/", user)
+              .then(() => getUsers())
+              .catch((error) => console.log(error.response));
+          
 
     };
     return (
@@ -31,7 +36,9 @@ const UsersForm = () => {
 
 
         <div>
+        <label htmlFor=''>First Name </label>
         <input
+       
               type="text"
               className="form-control"
               id="name"
@@ -40,6 +47,7 @@ const UsersForm = () => {
             />
         </div>
         <div>
+        <label htmlFor=''>Last Name </label>
         <input
               type="text"
               className="form-control"
@@ -49,6 +57,7 @@ const UsersForm = () => {
             />
         </div>
         <div>
+        <label htmlFor=''>Email </label>
         <input
               type="text"
               className="form-control"
@@ -58,6 +67,7 @@ const UsersForm = () => {
             />
         </div>
         <div>
+        <label htmlFor=''>Birth Date </label>
         <input
               type="date"
               className="form-control"
@@ -66,7 +76,7 @@ const UsersForm = () => {
               value={birthday}
             />
         </div>
-        <button type="submit" class="btn btn-primary">
+        <button type="submit" >
           Submit
         </button>
         </form>
