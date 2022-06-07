@@ -4,7 +4,11 @@ import Userslist from './components/Userslist';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 function App() {
+
+  
   const [users, setUsers] = useState([]);
+  const [userSelected, setUserSelected] = useState(null);
+
  
   useEffect(() => {
     axios
@@ -20,14 +24,19 @@ const getUsers = () => {
     .get("https://users-crud1.herokuapp.com/users/")
     .then((res) => setUsers(res.data));
 };
-
+const selectUser = (users) => setUserSelected(users);
+  
+const deselectUsers = () => setUserSelected(null);
 
   return (
     <div >
 <UsersForm 
-getUsers={getUsers}
+getUsers = {getUsers} 
+deselectUsers = {deselectUsers}
+userSelected = {userSelected}
+
 />
-<Userslist users={users}/>
+<Userslist users={users} selectUser={selectUser}/>
     </div>
   );
 }
